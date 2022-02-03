@@ -5,24 +5,20 @@
 # as a file called LICENSE with SHA-256 hash:
 # 8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643
 
-from typing import Any, Optional, List, NoReturn, Dict, Tuple
-
 import argparse
-import tempfile
-import os
 import errno
 import fcntl
-import sys
-import shlex
-import re
 import itertools
+import os
+import re
+import shlex
 import subprocess
-from .. import virtmods
-from .. import modfinder
-from .. import mkinitramfs
-from .. import qemu_helpers
-from .. import architectures
-from .. import resources
+import sys
+import tempfile
+from typing import Any, Dict, List, NoReturn, Optional, Tuple
+
+from .. import (architectures, mkinitramfs, modfinder, qemu_helpers, resources,
+                virtmods)
 
 uname = os.uname()
 
@@ -248,7 +244,7 @@ def export_virtfs(qemu: qemu_helpers.Qemu, arch: architectures.Arch,
     fsid = 'virtfs%d' % len(qemuargs)
     qemuargs.extend(['-fsdev', 'local,id=%s,path=%s,security_model=%s%s%s' %
                      (fsid, qemu.quote_optarg(path),
-                      security_model, ',readonly' if readonly else '',
+                      security_model, ',readonly=on' if readonly else '',
                       ',multidevs=remap' if qemu.has_multidevs else '')])
     qemuargs.extend(['-device', '%s,fsdev=%s,mount_tag=%s' % (arch.virtio_dev_type('9p'), fsid, qemu.quote_optarg(mount_tag))])
 
