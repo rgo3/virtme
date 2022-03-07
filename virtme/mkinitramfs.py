@@ -5,15 +5,15 @@
 # as a file called LICENSE with SHA-256 hash:
 # 8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643
 
-from typing import List, Dict, Optional
-
-import shutil
 import io
+import itertools
 import os.path
 import shlex
-import itertools
-from . import cpiowriter
-from . import util
+import shutil
+from typing import Dict, List, Optional
+
+from . import cpiowriter, util
+
 
 def make_base_layout(cw):
     for dir in (b'lib', b'bin', b'var', b'etc', b'newroot', b'dev', b'proc',
@@ -77,7 +77,7 @@ source /modules/load_all.sh
 
 log 'mounting hostfs...'
 
-if ! /bin/mount -n -t 9p -o {access},version=9p2000.L,trans=virtio,access=any /dev/root /newroot/; then
+if ! /bin/mount -n -t 9p -o {access},version=9p2000.L,trans=virtio,access=any,msize=20000 /dev/root /newroot/; then
   echo "Failed to mount real root.  We are stuck."
   sleep 5
   exit 1
