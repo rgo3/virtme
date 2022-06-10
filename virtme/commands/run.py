@@ -312,7 +312,7 @@ def do_it() -> int:
     export_virtfs(qemu, arch, qemuargs, guest_tools_path,
                   'virtme.guesttools')
 
-    initcmds = ['mkdir -p /run/virtme/guesttools',
+    initcmds = ['/bin/mkdir -p /run/virtme/guesttools',
                 '/bin/mount -n -t 9p -o ro,version=9p2000.L,trans=virtio,access=any,msize=20000 virtme.guesttools /run/virtme/guesttools',
                 'exec /run/virtme/guesttools/virtme-init']
 
@@ -576,7 +576,7 @@ def do_it() -> int:
             'rw' if args.rw else 'ro',
         ])
         initrdpath = None
-        initcmds.insert(0, 'mount -t tmpfs run /run')
+        initcmds.insert(0, '/bin/mount -t tmpfs run /run')
 
     # Now that we're done setting up kernelargs, append user-specified args
     # and then initargs

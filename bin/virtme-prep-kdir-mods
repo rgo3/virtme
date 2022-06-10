@@ -7,7 +7,7 @@ MODDIR=".virtme_mods/lib/modules/$FAKEVER"
 # Some distro don't have /sbin or /usr/sbin in user's default path. Make sure
 # to setup the right path to find all the commands needed to setup the modules
 # (depmod, etc.).
-PATH=$PATH:/sbin:/usr/sbin
+PATH=$PATH:/sbin:/usr/sbin:/run/current-system/sw/bin/
 
 if ! [ -f "modules.order" ]; then
     echo 'virtme-prep-kdir-mods must be run from a kernel build directory' >&2
